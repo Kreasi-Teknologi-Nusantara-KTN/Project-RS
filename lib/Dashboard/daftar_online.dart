@@ -37,6 +37,8 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
       _image = File(image.path);
       if (image != null) {
         _image = File(image.path);
+        foto_bpjs.text = image.path;
+        print(_image);
       } else {
         print('No image selected.');
       }
@@ -50,6 +52,8 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
       _image = File(image.path);
       if (image != null) {
         _image = File(image.path);
+        foto_bpjs.text = image.path;
+        print(_image);
       } else {
         print('No image selected.');
       }
@@ -176,13 +180,12 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
                                 .then((date) {
                               setState(() {
                                 selectedDate = date;
-                                if(selectedDate != null){
+                                if (selectedDate != null) {
                                   tanggalPeriksa.text =
-                                  "${selectedDate.toLocal()}".split(' ')[0];
-                                }else{
+                                      "${selectedDate.toLocal()}".split(' ')[0];
+                                } else {
                                   selectedDate = DateTime.now();
                                 }
-
                               });
                             });
                           },
@@ -241,7 +244,10 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
                           visible: visible,
                           child: TextFormField(
                             validator: (val) {
-                              return (val == null) ? 'Foto BPJS' : null;
+                              if (val == null || val.isEmpty) {
+                                return 'Foto tidak boleh kosong';
+                              }
+                              return null;
                             },
                             controller: foto_bpjs,
                             readOnly: true,
@@ -266,12 +272,21 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
                               idpasien.text =
                                   controllerPasien.pasien.value.idPasien;
                               if (formKey.currentState.validate()) {
-                                PendaftaranOnlinePasienServices.connectToAPI(
-                                    idpasien.text,
-                                    tanggalPeriksa.text,
-                                    dokterID.text,
-                                    jenis_bayar.text,
-                                    foto_bpjs.text);
+                                if (jenis_bayar.text == 'BPJS') {
+                                  PendaftaranOnlinePasienServices.connectToAPI(
+                                      idpasien.text,
+                                      tanggalPeriksa.text,
+                                      dokterID.text,
+                                      jenis_bayar.text,
+                                      _image);
+                                } else {
+                                  PendaftaranOnlinePasienServices.connectToAPI(
+                                      idpasien.text,
+                                      tanggalPeriksa.text,
+                                      dokterID.text,
+                                      jenis_bayar.text,
+                                      null);
+                                }
 
                                 showDialog(
                                     context: context,
