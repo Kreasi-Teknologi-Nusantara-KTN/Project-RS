@@ -39,7 +39,8 @@ class registrasiPasienServices {
       "updated_at": updated_at,
       "password": password
     };
-    // print("cetak data : " + data.toString());
+    print("cetak data : " + data.toString());
+
     try {
       final response = await http.get(Uri.parse(apiURL),
           headers: <String, String>{'authorization': basicAuth});

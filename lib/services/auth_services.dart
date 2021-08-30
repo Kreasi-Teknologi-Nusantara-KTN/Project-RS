@@ -26,8 +26,8 @@ class AuthServices {
       //response sukses
       return jsonDecode(response.body);
     } catch (e) {
-      print(e.toString());
-      return null;
+      print("error authlogin : "+e.toString());
+      throw e.toString();
     }
   }
 

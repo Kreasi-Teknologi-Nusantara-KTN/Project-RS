@@ -136,8 +136,13 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
                                 .then((date) {
                               setState(() {
                                 selectedDate = date;
-                                tanggalPeriksa.text =
-                                    "${selectedDate.toLocal()}".split(' ')[0];
+                                if(selectedDate != null){
+                                  tanggalPeriksa.text =
+                                  "${selectedDate.toLocal()}".split(' ')[0];
+                                }else{
+                                  selectedDate = DateTime.now();
+                                }
+
                               });
                             });
                           },
