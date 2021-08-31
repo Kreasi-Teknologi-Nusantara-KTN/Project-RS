@@ -18,16 +18,17 @@ bool isLoading = false;
 double latitudeMap, longitudeMap, longitudeMap1, latitudeMap1;
 Map<String, dynamic> location1 = {};
 List<String> datalayanan = [];
-String datanama, datanohp, datakeluhan, datakondisipasien;
+//String datanama, datanohp, datakeluhan, datakondisipasien;
+String datakeluhan, datakondisipasien;
 final ControllerPasien controllerPasien = Get.find<ControllerPasien>();
 
 class _HomeCareState extends State<HomeCare> {
-  TextEditingController namapasien = new TextEditingController(
-      text: (datanama != null)
-          ? datanama
-          : controllerPasien.pasien.value.namaLengkap);
-  TextEditingController nohp = new TextEditingController(
-      text: (datanohp != null) ? datanohp : controllerPasien.pasien.value.noHp);
+  // TextEditingController namapasien = new TextEditingController(
+  //     text: (datanama != null)
+  //         ? datanama
+  //         : controllerPasien.pasien.value.namaLengkap);
+  // TextEditingController nohp = new TextEditingController(
+  //     text: (datanohp != null) ? datanohp : controllerPasien.pasien.value.noHp);
   TextEditingController keluhan =
       new TextEditingController(text: (datakeluhan != null) ? datakeluhan : "");
   TextEditingController kondisipasien = new TextEditingController(
@@ -95,42 +96,42 @@ class _HomeCareState extends State<HomeCare> {
                         child: Column(
                           children: <Widget>[
                             SizedBox(height: 30),
-                            new TextFormField(
-                              controller: namapasien,
-                              validator: (val) {
-                                return (val.length == 0 || val.length < 3)
-                                    ? 'Periksa kemblai nama pasien'
-                                    : null;
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.card_membership),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  filled: true,
-                                  hintStyle: TextStyle(color: Colors.grey[800]),
-                                  hintText: "Nama Pasien",
-                                  fillColor: Colors.white70),
-                            ),
-                            SizedBox(height: 20),
-                            new TextFormField(
-                              controller: nohp,
-                              validator: (val) {
-                                return (val.length < 10)
-                                    ? 'No telpon pasien salah'
-                                    : null;
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.phone_android),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  filled: true,
-                                  hintStyle: TextStyle(color: Colors.grey[800]),
-                                  hintText: "No.HP",
-                                  fillColor: Colors.white70),
-                            ),
-                            SizedBox(height: 20),
+                            // new TextFormField(
+                            //   controller: namapasien,
+                            //   validator: (val) {
+                            //     return (val.length == 0 || val.length < 3)
+                            //         ? 'Periksa kemblai nama pasien'
+                            //         : null;
+                            //   },
+                            //   decoration: InputDecoration(
+                            //       prefixIcon: Icon(Icons.card_membership),
+                            //       border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(10.0),
+                            //       ),
+                            //       filled: true,
+                            //       hintStyle: TextStyle(color: Colors.grey[800]),
+                            //       hintText: "Nama Pasien",
+                            //       fillColor: Colors.white70),
+                            // ),
+                            // SizedBox(height: 20),
+                            // new TextFormField(
+                            //   controller: nohp,
+                            //   validator: (val) {
+                            //     return (val.length < 10)
+                            //         ? 'No telpon pasien salah'
+                            //         : null;
+                            //   },
+                            //   decoration: InputDecoration(
+                            //       prefixIcon: Icon(Icons.phone_android),
+                            //       border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(10.0),
+                            //       ),
+                            //       filled: true,
+                            //       hintStyle: TextStyle(color: Colors.grey[800]),
+                            //       hintText: "No.HP",
+                            //       fillColor: Colors.white70),
+                            // ),
+                            //SizedBox(height: 20),
                             new TextFormField(
                               controller: lokasi,
                               readOnly: true,
@@ -138,11 +139,11 @@ class _HomeCareState extends State<HomeCare> {
                                 return (val.length == 0) ? null : null;
                               },
                               onTap: () {
-                                print("datamasuk ");
-                                datanama = namapasien.text;
-                                print("nama " + datanama);
-                                datanohp = nohp.text;
-                                print("nohp " + datanohp);
+                                // print("datamasuk ");
+                                // datanama = namapasien.text;
+                                // print("nama " + datanama);
+                                // datanohp = nohp.text;
+                                //print("nohp " + datanohp);
                                 datakeluhan = keluhan.text;
                                 print("keluhan " + datakeluhan);
                                 datakondisipasien = kondisipasien.text;
@@ -211,8 +212,12 @@ class _HomeCareState extends State<HomeCare> {
                                         .sendHomeCare(
                                             idPasien: controllerPasien
                                                 .pasien.value.idPasien,
-                                            namaPasien: namapasien.text,
-                                            noHp: nohp.text,
+                                            // namaPasien: namapasien.text,
+                                            namaPasien: controllerPasien
+                                                .pasien.value.namaLengkap,
+                                            // noHp: nohp.text,
+                                            noHp: controllerPasien
+                                                .pasien.value.noHp,
                                             tanggal_pelayanan: DateTime.now()
                                                 .toString()
                                                 .split(' ')[0],
@@ -310,9 +315,9 @@ class _HomeCareState extends State<HomeCare> {
                                   child: Center(
                                       child: TextButton(
                                 onPressed: () {
-                                  datanama = null;
+                                  // datanama = null;
                                   datakeluhan = null;
-                                  datanohp = null;
+                                  // datanohp = null;
                                   datakondisipasien = null;
                                   latitudeMap1 = null;
                                   longitudeMap1 = null;
