@@ -71,8 +71,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                DataRow(
+                  title: "Nomer Rekam Medis",
+                  value: (controllerPasien.pasien.value.noRekamMedis == null)
+                      ? "-"
+                      : controllerPasien.pasien.value.noRekamMedis,
+                ),
+                SizedBox(
+                  height: 19,
+                ),
                 Obx(
-                      () => DataRow(
+                  () => DataRow(
                     title: "Nama Pasien",
                     value: controllerPasien.pasien.value.namaLengkap,
                   ),
