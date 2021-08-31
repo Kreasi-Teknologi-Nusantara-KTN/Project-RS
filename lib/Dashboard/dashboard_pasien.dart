@@ -209,7 +209,7 @@ class _DashboardPasien extends State<DashboardPasien>
                         } else if (snapshot.hasError) {
                           return Text("${snapshot.error}");
                         }
-                        return CircularProgressIndicator();
+                        return Center(child: CircularProgressIndicator());
                       },
                     )
                             // ListView(
@@ -349,7 +349,9 @@ class InformasiCard extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 blurRadius: 7,
                 offset: Offset(0, 3))
-          ]),
+          ],
+
+          ),
           child: Row(
             children: [
               Image.network(

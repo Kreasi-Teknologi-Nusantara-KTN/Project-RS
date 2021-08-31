@@ -1,7 +1,9 @@
+import 'package:aplikasi_rs/models/model_postingan.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DetailInformasi extends StatelessWidget {
-  final Map<String, dynamic> informasi;
+  final Postingan informasi;
 
   DetailInformasi({@required this.informasi});
   @override
@@ -15,6 +17,9 @@ class DetailInformasi extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 18),
+            constraints: BoxConstraints(
+              minHeight: Get.height - (Get.height * 0.1) - 62 - 51
+            ),
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -23,8 +28,8 @@ class DetailInformasi extends StatelessWidget {
             ]),
             child: Column(
               children: [
-                Image.asset(
-                  informasi['imageUrl'],
+                Image.network('http://admin.rsbmgeriatri.com/asset/'+
+                  informasi.gambar,
                   fit: BoxFit.cover,
                   height: 166,
                   width: double.infinity,
@@ -37,7 +42,7 @@ class DetailInformasi extends StatelessWidget {
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: Text(
-                      informasi['title'],
+                      informasi.judul,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
@@ -50,7 +55,7 @@ class DetailInformasi extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    informasi['body'],
+                    informasi.konten,
                     style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
                   ),
                 ),
