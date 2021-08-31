@@ -11,21 +11,21 @@ ModelPasien modelPasienFromJson(String str) =>
 String modelPasienToJson(ModelPasien data) => json.encode(data.toJson());
 
 class ModelPasien {
-  ModelPasien({
-    this.idPasien,
-    this.namaLengkap,
-    this.noHp,
-    this.tanggalLahir,
-    this.noKtp,
-    this.jenisKelamin,
-    this.agama,
-    this.pendidikan,
-    this.alamat,
-    this.email,
-    this.createdAt,
-    this.updatedAt,
-    this.password,
-  });
+  ModelPasien(
+      {this.idPasien,
+      this.namaLengkap,
+      this.noHp,
+      this.tanggalLahir,
+      this.noKtp,
+      this.jenisKelamin,
+      this.agama,
+      this.pendidikan,
+      this.alamat,
+      this.email,
+      this.createdAt,
+      this.updatedAt,
+      this.password,
+      this.noRekamMedis});
 
   String idPasien;
   String namaLengkap;
@@ -40,6 +40,7 @@ class ModelPasien {
   String createdAt;
   String updatedAt;
   String password;
+  String noRekamMedis;
 
   factory ModelPasien.fromJson(Map<String, dynamic> json) => ModelPasien(
         idPasien: json["id_pasien"] == null ? null : json["id_pasien"],
@@ -57,6 +58,8 @@ class ModelPasien {
         createdAt: json["created_at"] == null ? null : json["created_at"],
         updatedAt: json["updated_at"] == null ? null : json["updated_at"],
         password: json["password"] == null ? null : json["password"],
+        noRekamMedis:
+            json["no_rekam_medis"] == null ? null : json["no_rekam_medis"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,5 +76,6 @@ class ModelPasien {
         "created_at": createdAt == null ? null : createdAt,
         "updated_at": updatedAt == null ? null : updatedAt,
         "password": password == null ? null : password,
+        "no_rekam_medis": noRekamMedis == null ? null : noRekamMedis,
       };
 }
