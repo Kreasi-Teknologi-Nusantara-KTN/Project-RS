@@ -16,11 +16,11 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## Login pasien 
-NIK         : 1234567891234567
-
-Kata Sandi  : 098765
-
-## Login Dokter
-NIK         : 0987654321123456
+NIK         : 1122334455667788
 
 Kata Sandi  : 123456
+
+## Login Dokter
+NIK         : -
+
+Kata Sandi  : -
