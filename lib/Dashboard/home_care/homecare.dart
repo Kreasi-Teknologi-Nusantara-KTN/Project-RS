@@ -19,12 +19,15 @@ double latitudeMap, longitudeMap, longitudeMap1, latitudeMap1;
 Map<String, dynamic> location1 = {};
 List<String> datalayanan = [];
 String datanama, datanohp, datakeluhan, datakondisipasien;
+final ControllerPasien controllerPasien = Get.find<ControllerPasien>();
 
 class _HomeCareState extends State<HomeCare> {
-  TextEditingController namapasien =
-      new TextEditingController(text: (datanama != null) ? datanama : "");
-  TextEditingController nohp =
-      new TextEditingController(text: (datanohp != null) ? datanohp : "");
+  TextEditingController namapasien = new TextEditingController(
+      text: (datanama != null)
+          ? datanama
+          : controllerPasien.pasien.value.namaLengkap);
+  TextEditingController nohp = new TextEditingController(
+      text: (datanohp != null) ? datanohp : controllerPasien.pasien.value.noHp);
   TextEditingController keluhan =
       new TextEditingController(text: (datakeluhan != null) ? datakeluhan : "");
   TextEditingController kondisipasien = new TextEditingController(
@@ -33,7 +36,7 @@ class _HomeCareState extends State<HomeCare> {
       text: (latitudeMap1 != null)
           ? "${location1["subLocality"] + " " + location1["locality"] + " " + location1["administrativeArea"]}"
           : "");
-  final ControllerPasien controllerPasien = Get.find<ControllerPasien>();
+
   final formKey = GlobalKey<FormState>();
 
   _onLoading() => setState(() => isLoading = true);
