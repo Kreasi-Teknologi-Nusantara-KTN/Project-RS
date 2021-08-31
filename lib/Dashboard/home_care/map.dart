@@ -21,6 +21,11 @@ class _MapsState extends State<Maps> {
     super.initState();
     markers = Set.from([]);
     setCustomMarker();
+    // Marker m = Marker(
+    //     markerId: MarkerId('1'),
+    //     icon: customIcon,
+    //     position: LatLng(latitudeMap, longitudeMap));
+    // markers.add(m);
   }
 
   void setCustomMarker() async {
@@ -52,6 +57,19 @@ class _MapsState extends State<Maps> {
     setState(() {
       _controller = _cntrl;
       markers.add(Marker(
+        onTap: () {
+          Marker m = Marker(
+              markerId: MarkerId('1'),
+              icon: customIcon,
+              position: LatLng(latitudeMap, longitudeMap));
+          setState(() {
+            markers.add(m);
+            latitudeMap1 = latitudeMap;
+            longitudeMap1 = longitudeMap;
+            print("latitudeMap1 " + latitudeMap1.toString());
+            print("longitudeMap1 " + longitudeMap1.toString());
+          });
+        },
         markerId: MarkerId("id-1"),
         position: LatLng(latitudeMap, longitudeMap),
         icon: mapMarker,
@@ -74,7 +92,12 @@ class _MapsState extends State<Maps> {
             child: Row(
               children: <Widget>[
                 SizedBox(width: 25),
-                Icon(Icons.arrow_back, color: Colors.white),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomeCare()));
+                    },
+                    child: Icon(Icons.arrow_back, color: Colors.white)),
                 SizedBox(width: 5),
                 Container(
                   child: Text("Lokasi Anda",
@@ -120,9 +143,55 @@ class _MapsState extends State<Maps> {
                   )),
               GestureDetector(
                 onTap: () {
-                  getCurrentLocation();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeCare()));
+                  if (latitudeMap1 != null && longitudeMap1 != null) {
+                    getCurrentLocation();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeCare()));
+                  } else {
+                    AlertDialog(
+                      title: const Text('AlertDialog Title'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: const <Widget>[
+                            Text('This is a demo alert dialog.'),
+                            Text('Would you like to approve of this message?'),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('Approve'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          //title: const Text('Lokasi'),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: const <Widget>[
+                                Text('Pilih Lokasi anda'),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Oke'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(
