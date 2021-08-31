@@ -109,11 +109,23 @@ class _DashboardDokterState extends State<DashboardDokter>
                             Positioned(
                                 child: GestureDetector(
                               onTap: () {
-                                SharedPreferencesHelper.removeValues('noKtp');
-                                SharedPreferencesHelper.removeValues('pass');
-                                SharedPreferencesHelper.removeValues('role');
-                                setStatus("Offline");
-                                Get.offAll(() => MainScreen());
+                                Get.defaultDialog(
+                                  title: 'Info',
+                                  middleText: "Apakah anda yakin ingin keluar?",
+                                  textConfirm: "Yakin",
+                                  confirmTextColor: Colors.white,
+                                  onConfirm: () {
+                                    SharedPreferencesHelper.removeValues(
+                                        'noKtp');
+                                    SharedPreferencesHelper.removeValues(
+                                        'pass');
+                                    SharedPreferencesHelper.removeValues(
+                                        'role');
+                                    setStatus("Offline");
+                                    Get.offAll(() => MainScreen());
+                                  },
+                                  textCancel: "Batal",
+                                );
                               },
                               child: Container(
                                 alignment: Alignment.topRight,

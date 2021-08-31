@@ -175,11 +175,23 @@ class _DashboardPasien extends State<DashboardPasien>
                               srcSvg: "assets/icons/logout.svg",
                               title: "Keluar",
                               press: () {
-                                SharedPreferencesHelper.removeValues('noKtp');
-                                SharedPreferencesHelper.removeValues('pass');
-                                SharedPreferencesHelper.removeValues('role');
-                                setStatus("Offline");
-                                Get.offAll(() => MainScreen());
+                                Get.defaultDialog(
+                                  title: 'Info',
+                                  middleText: "Apakah anda yakin ingin keluar?",
+                                  textConfirm: "Yakin",
+                                  confirmTextColor: Colors.white,
+                                  onConfirm: () {
+                                    SharedPreferencesHelper.removeValues(
+                                        'noKtp');
+                                    SharedPreferencesHelper.removeValues(
+                                        'pass');
+                                    SharedPreferencesHelper.removeValues(
+                                        'role');
+                                    setStatus("Offline");
+                                    Get.offAll(() => MainScreen());
+                                  },
+                                  textCancel: "Batal",
+                                );
                               }),
                         ],
                       ),
@@ -344,13 +356,14 @@ class InformasiCard extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 10),
           height: 120,
           width: double.infinity,
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                blurRadius: 7,
-                offset: Offset(0, 3))
-          ],
-
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  blurRadius: 7,
+                  offset: Offset(0, 3))
+            ],
           ),
           child: Row(
             children: [

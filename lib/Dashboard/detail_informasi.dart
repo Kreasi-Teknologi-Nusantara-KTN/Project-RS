@@ -1,11 +1,19 @@
 import 'package:aplikasi_rs/models/model_postingan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html/parser.dart';
 
 class DetailInformasi extends StatelessWidget {
   final Postingan informasi;
 
   DetailInformasi({@required this.informasi});
+
+  String parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString = parse(document.body.text).documentElement.text;
+    return parsedString;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +26,7 @@ class DetailInformasi extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 18),
             constraints: BoxConstraints(
-              minHeight: Get.height - (Get.height * 0.1) - 62 - 51
-            ),
+                minHeight: Get.height - (Get.height * 0.1) - 62 - 51),
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -28,9 +35,12 @@ class DetailInformasi extends StatelessWidget {
             ]),
             child: Column(
               children: [
-                Image.network('http://admin.rsbmgeriatri.com/asset/'+
-                  informasi.gambar,
-                  fit: BoxFit.cover,
+                SizedBox(
+                  height: 4,
+                ),
+                Image.network(
+                  'http://admin.rsbmgeriatri.com/asset/' + informasi.gambar,
+                  fit: BoxFit.contain,
                   height: 166,
                   width: double.infinity,
                 ),
@@ -55,8 +65,8 @@ class DetailInformasi extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    informasi.konten,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    parseHtmlString(informasi.konten),
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                   ),
                 ),
                 SizedBox(
