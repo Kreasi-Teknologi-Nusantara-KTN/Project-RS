@@ -94,21 +94,33 @@ class _DashboardPasien extends State<DashboardPasien>
                             )))),
                     Positioned(
                         child: Container(
-                            padding: EdgeInsets.only(left: 30.0),
+                            padding: EdgeInsets.only(left: 30.0, right: 30.0),
                             margin: EdgeInsets.only(
                                 top:
                                     MediaQuery.of(context).size.height * 0.100),
                             child: SafeArea(
-                                child: Obx(
-                              () => Text(
-                                "Selamat datang " +
-                                    controllerPasien.pasien.value.namaLengkap,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15),
-                              ),
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Obx(
+                                  () => Text(
+                                    "Selamat datang " +
+                                        controllerPasien
+                                            .pasien.value.namaLengkap,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15),
+                                  ),
+                                ),
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage: AssetImage(
+                                      "assets/images/ProfileDefault.jpg"),
+                                )
+                              ],
                             ))))
                   ],
                 ),
