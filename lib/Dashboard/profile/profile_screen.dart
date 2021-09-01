@@ -31,35 +31,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: Get.width,
                   height: Get.height * 0.3,
                 ),
-                Positioned(
-                  top: Get.height * 0.1,
-                  child: Container(
-                    width: Get.width,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                              size: 30,
+                Container(
+                  child: Positioned(
+                    top: Get.height * 0.1,
+                    child: Container(
+                      width: Get.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                                size: 30,
+                              ),
                             ),
-                          ),
-                          Expanded(
-                              child: Center(
-                                  child: Text("Profile Pasien",
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
-                                      ))))
-                        ],
+                            Expanded(
+                                child: Center(
+                                    child: Text("Profile Pasien",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                        ))))
+                          ],
+                        ),
                       ),
                     ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CircleAvatar(
+                    radius: 45,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage:
+                        AssetImage("assets/images/ProfileDefault.jpg"),
                   ),
                 )
               ],
