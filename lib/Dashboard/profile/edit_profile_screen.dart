@@ -3,8 +3,10 @@ import 'package:aplikasi_rs/controllers/controllers.dart';
 import 'package:aplikasi_rs/services/pasien_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'dart:io';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -22,7 +24,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController agamaController = TextEditingController();
   TextEditingController pendidikanController = TextEditingController();
   bool isLoading = false;
-
+  final picker = ImagePicker();
+  File _image;
   _onLoading() => setState(() => isLoading = true);
 
   _offLoading() => setState(() => isLoading = false);
@@ -83,6 +86,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
+  Future _getImagegallery() async {
+    var image = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      //_image = File(image.path);
+      if (image != null) {
+        _image = File(image.path);
+        //foto_bpjs.text = image.path;
+        print(_image);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LoadingOverlay(
@@ -101,34 +119,72 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: Get.width,
                       height: Get.height * 0.3,
                     ),
-                    Positioned(
-                      top: Get.height * 0.1,
-                      child: Container(
-                        width: Get.width,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.white,
-                                  size: 30,
+                    Container(
+                      child: Positioned(
+                        top: Get.height * 0.1,
+                        child: Container(
+                          width: Get.width,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                  child: Center(
-                                      child: Text("Profile Pasien",
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white,
-                                          ))))
-                            ],
+                                Expanded(
+                                    child: Center(
+                                        child: Text("Profile Pasien",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                            ))))
+                              ],
+                            ),
                           ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      //margin: const EdgeInsets.all(30.0),
+                      alignment: Alignment.bottomCenter,
+                      width: MediaQuery.of(context).size.width * 0.999,
+                      height: MediaQuery.of(context).size.height * 0.290,
+                      child: Stack(
+                        children: [
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: (_image == null)
+                                        ? AssetImage(
+                                            "assets/images/ProfileDefault.jpg")
+                                        : FileImage(_image))),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: GestureDetector(
+                        onTap: () {
+                          _getImagegallery();
+                        },
+                        child: Icon(
+                          Icons.add_circle,
+                          size: 30,
+                          color: Colors.blue,
                         ),
                       ),
                     )
