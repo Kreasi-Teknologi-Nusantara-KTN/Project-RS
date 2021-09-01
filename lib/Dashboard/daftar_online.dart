@@ -49,7 +49,6 @@ class PendaftaranOnlineState extends State<PendaftaranOnline> {
     var image = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      _image = File(image.path);
       if (image != null) {
         _image = File(image.path);
         foto_bpjs.text = image.path;
