@@ -2,9 +2,11 @@ import 'package:aplikasi_rs/controllers/controllers.dart';
 import 'package:aplikasi_rs/services/registrasi_pasien_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'login_pasien.dart';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
@@ -36,6 +38,8 @@ class _RegistrasiPasienState extends State<RegistrasiPasien> {
   bool isHiddenPassword = true;
   bool isHiddenPassword1 = true;
   bool loading = false;
+  final picker = ImagePicker();
+  File _image;
 
   _onLoading() {
     setState(() {
@@ -80,6 +84,21 @@ class _RegistrasiPasienState extends State<RegistrasiPasien> {
     }
   }
 
+  Future _getImagegallery() async {
+    var image = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      //_image = File(image.path);
+      if (image != null) {
+        _image = File(image.path);
+        //foto_bpjs.text = image.path;
+        print(_image);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LoadingOverlay(
@@ -111,6 +130,42 @@ class _RegistrasiPasienState extends State<RegistrasiPasien> {
                           key: formKey,
                           child: Column(
                             children: <Widget>[
+                              Container(
+                                height: 120,
+                                width: 120,
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 120,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: (_image == null)
+                                                  ? AssetImage(
+                                                      "assets/images/ProfileDefault.jpg")
+                                                  : FileImage(_image))),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          _getImagegallery();
+                                        },
+                                        child: Container(
+                                          height: 30,
+                                          width: 30,
+                                          child: Icon(
+                                            Icons.add_circle,
+                                            size: 30,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                               new TextFormField(
                                 controller: namaLengkap,
                                 validator: (val) {
