@@ -2,7 +2,6 @@
 //
 //     final modelPasien = modelPasienFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ModelPasien modelPasienFromJson(String str) =>
@@ -14,6 +13,7 @@ class ModelPasien {
   ModelPasien(
       {this.idPasien,
       this.namaLengkap,
+      this.gambar,
       this.noHp,
       this.tanggalLahir,
       this.noKtp,
@@ -29,6 +29,7 @@ class ModelPasien {
 
   String idPasien;
   String namaLengkap;
+  String gambar;
   String noHp;
   String tanggalLahir;
   String noKtp;
@@ -45,6 +46,7 @@ class ModelPasien {
   factory ModelPasien.fromJson(Map<String, dynamic> json) => ModelPasien(
         idPasien: json["id_pasien"] == null ? null : json["id_pasien"],
         namaLengkap: json["nama_lengkap"] == null ? null : json["nama_lengkap"],
+        gambar: json["image_profile"] == null ? null : json["image_profile"],
         noHp: json["no_hp"] == null ? null : json["no_hp"],
         tanggalLahir:
             json["tanggal_lahir"] == null ? null : json["tanggal_lahir"],
@@ -65,6 +67,7 @@ class ModelPasien {
   Map<String, dynamic> toJson() => {
         "id_pasien": idPasien == null ? null : idPasien,
         "nama_lengkap": namaLengkap == null ? null : namaLengkap,
+        "image_profile": gambar == null ? null : gambar,
         "no_hp": noHp == null ? null : noHp,
         "tanggal_lahir": tanggalLahir == null ? null : tanggalLahir,
         "no_ktp": noKtp == null ? null : noKtp,
