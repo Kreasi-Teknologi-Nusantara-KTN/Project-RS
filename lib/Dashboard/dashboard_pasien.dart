@@ -117,8 +117,15 @@ class _DashboardPasien extends State<DashboardPasien>
                                 CircleAvatar(
                                   radius: 30,
                                   backgroundColor: Colors.transparent,
-                                  backgroundImage: AssetImage(
-                                      "assets/images/ProfileDefault.jpg"),
+                                  backgroundImage: (controllerPasien
+                                              .pasien.value.gambar ==
+                                          null)
+                                      ? AssetImage(
+                                          "assets/images/ProfileDefault.jpg")
+                                      : NetworkImage(
+                                          'https://api.rsbmgeriatri.com/assets/profile/' +
+                                              controllerPasien
+                                                  .pasien.value.gambar),
                                 )
                               ],
                             ))))
