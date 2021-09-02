@@ -168,8 +168,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     image: (_image == null)
-                                        ? AssetImage(
-                                            "assets/images/ProfileDefault.jpg")
+                                        ? (controllerPasien
+                                                    .pasien.value.gambar ==
+                                                null)
+                                            ? AssetImage(
+                                                "assets/images/ProfileDefault.jpg")
+                                            : NetworkImage(
+                                                'https://api.rsbmgeriatri.com/assets/profile/' +
+                                                    controllerPasien
+                                                        .pasien.value.gambar)
                                         : FileImage(_image))),
                           ),
                         ],
