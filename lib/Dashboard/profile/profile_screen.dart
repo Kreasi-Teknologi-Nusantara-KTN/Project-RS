@@ -70,7 +70,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     radius: 45,
                     backgroundColor: Colors.transparent,
                     backgroundImage:
-                        AssetImage("assets/images/ProfileDefault.jpg"),
+                        (controllerPasien.pasien.value.gambar == null)
+                            ? AssetImage("assets/images/ProfileDefault.jpg")
+                            : NetworkImage(
+                                'https://api.rsbmgeriatri.com/assets/profile/' +
+                                    controllerPasien.pasien.value.gambar),
                   ),
                 )
               ],
