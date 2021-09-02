@@ -1,5 +1,4 @@
 import 'package:aplikasi_rs/controllers/controllers.dart';
-import 'package:aplikasi_rs/services/registrasi_pasien_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -73,12 +72,11 @@ class _RegistrasiPasienState extends State<RegistrasiPasien> {
               email.text,
               created_at,
               DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()),
-              confirmPass.text)
-          .then((value) => _offLoading());
+              confirmPass.text,
+              _image)
+          .then((dynamic value) => _offLoading());
       // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => LoginPasien()));
+      //     context, MaterialPageRoute(builder: (context) => LoginPasien()));
     } else {
       _offLoading();
     }
@@ -88,10 +86,8 @@ class _RegistrasiPasienState extends State<RegistrasiPasien> {
     var image = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      //_image = File(image.path);
       if (image != null) {
         _image = File(image.path);
-        //foto_bpjs.text = image.path;
         print(_image);
       } else {
         print('No image selected.');
