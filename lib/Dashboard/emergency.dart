@@ -26,76 +26,84 @@ class _EmergencyState extends State<Emergency> {
 
   _sendEmergency(String lat, String long) async {
     _onLoading();
-    await PasienServices().sendEmergency(
-        idPasien: controllerPasien.pasien.value.idPasien,
-        latitude: lat,
-        longitude: long).then((value) {
+    await PasienServices()
+        .sendEmergency(
+            idPasien: controllerPasien.pasien.value.idPasien,
+            latitude: lat,
+            longitude: long)
+        .then((value) {
       _offLoading();
 
-          print("value ui emergency " + value.toString());
-          if(value != null){
-            if(value['status'] == true){
-              Get.defaultDialog(
-                  radius: 3,
-                  title: '',
-                  content: Container(
-                    width: Get.width * 0.8,
-                    height: Get.height * 0.5,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Emergency Berhasil Di Dikirim "),
-                        SizedBox(
-                          height: 22,
-                        ),
-                        // Text("latitude : " + latitude.toString()),
-                        // Text("langitude : " + longitude.toString()),
-                        SvgPicture.asset(
-                            "assets/icons/akar-icons_circle-check-fill.svg")
-                      ],
+      print("value ui emergency " + value.toString());
+      if (value != null) {
+        if (value['status'] == true) {
+          Get.defaultDialog(
+              radius: 3,
+              title: '',
+              content: Container(
+                width: Get.width * 0.8,
+                height: Get.height * 0.5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Emergency Berhasil Di Dikirim "),
+                    SizedBox(
+                      height: 22,
                     ),
-                  ));
-            }else{
-              Get.defaultDialog(
-                  radius: 3,
-                  title: '',
-                  content: Container(
-                    width: Get.width * 0.8,
-                    height: Get.height * 0.3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Emergency Gagal Di Dikirim"),
-                        SizedBox(
-                          height: 22,
-                        ),
-                        Icon(Icons.close, color: Colors.red,size: 50,)
-                      ],
+                    // Text("latitude : " + latitude.toString()),
+                    // Text("langitude : " + longitude.toString()),
+                    SvgPicture.asset(
+                        "assets/icons/akar-icons_circle-check-fill.svg")
+                  ],
+                ),
+              ));
+        } else {
+          Get.defaultDialog(
+              radius: 3,
+              title: '',
+              content: Container(
+                width: Get.width * 0.8,
+                height: Get.height * 0.3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Emergency Gagal Di Dikirim"),
+                    SizedBox(
+                      height: 22,
                     ),
-                  ));
-            }
-
-          }else{
-            Get.defaultDialog(
-                radius: 3,
-                title: '',
-                content: Container(
-                  width: Get.width * 0.8,
-                  height: Get.height * 0.3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Emergency Gagal Di Dikirim"),
-                      SizedBox(
-                        height: 22,
-                      ),
-                      Icon(Icons.close, color: Colors.red,size: 50,)
-                    ],
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                      size: 50,
+                    )
+                  ],
+                ),
+              ));
+        }
+      } else {
+        Get.defaultDialog(
+            radius: 3,
+            title: '',
+            content: Container(
+              width: Get.width * 0.8,
+              height: Get.height * 0.3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Emergency Gagal Di Dikirim"),
+                  SizedBox(
+                    height: 22,
                   ),
-                ));
-          }
-
-    }).catchError((e){
+                  Icon(
+                    Icons.close,
+                    color: Colors.red,
+                    size: 50,
+                  )
+                ],
+              ),
+            ));
+      }
+    }).catchError((e) {
       _offLoading();
       Get.defaultDialog(
           radius: 3,
@@ -106,11 +114,14 @@ class _EmergencyState extends State<Emergency> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Emergency Gagal Di Dikirim \n error: "+e.toString()),
+                Text("Emergency Gagal Di Dikirim \n error: " + e.toString()),
                 SizedBox(
                   height: 22,
                 ),
-                Icon(Icons.close, color: Colors.red,)
+                Icon(
+                  Icons.close,
+                  color: Colors.red,
+                )
               ],
             ),
           ));
@@ -260,7 +271,8 @@ class _EmergencyState extends State<Emergency> {
                       if (latitude == 0 || longitude == 0) {
                         getCurrentLocation();
                       } else {
-          _sendEmergency(latitude.toString(), longitude.toString());
+                        _sendEmergency(
+                            latitude.toString(), longitude.toString());
                       }
                     },
                     child: Container(
@@ -306,7 +318,7 @@ class _EmergencyState extends State<Emergency> {
                         borderRadius: BorderRadius.circular(10)),
                     child: Center(
                       child: Text(
-                        "088-888-888-888",
+                        "0431-822952",
                         style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
