@@ -4,6 +4,7 @@ import 'package:aplikasi_rs/config/theme.dart';
 import 'package:aplikasi_rs/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     print(controllerPasien.pasien.value.namaLengkap);
+    print(controllerPasien.pasien.value.gambar);
 
     return Scaffold(
       body: Column(
@@ -64,19 +66,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: CircleAvatar(
-                    radius: 45,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage:
-                        (controllerPasien.pasien.value.gambar == null)
+                Obx(() => Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CircleAvatar(
+                        radius: 45,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: (controllerPasien
+                                    .pasien.value.gambar ==
+                                null)
                             ? AssetImage("assets/images/ProfileDefault.jpg")
                             : NetworkImage(
                                 'https://api.rsbmgeriatri.com/assets/profile/' +
                                     controllerPasien.pasien.value.gambar),
-                  ),
-                )
+                      ),
+                    )),
               ],
             ),
           ),
