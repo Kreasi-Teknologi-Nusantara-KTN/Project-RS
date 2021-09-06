@@ -20,6 +20,7 @@ class RegistrasiPasien extends StatefulWidget {
 DateTime selectedDate = new DateTime.now();
 String created_at = DateTime.now().toString();
 //int yearNow = int.parse("${selectedDate.toLocal()}".split('-')[0]);
+String statusCode, body;
 
 class _RegistrasiPasienState extends State<RegistrasiPasien> {
   ControllerPasien controllerPasien = Get.find<ControllerPasien>();
@@ -57,26 +58,46 @@ class _RegistrasiPasienState extends State<RegistrasiPasien> {
   _register() async {
     _onLoading();
     if (formKey.currentState.validate()) {
-      print(DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()));
-      controllerPasien
-          .registerPasienController(
-              // registrasiPasienServices.connectToAPI(
-              namaLengkap.text,
-              noHp.text,
-              jenisKelamin.text,
-              tanggalLahir.text,
-              noKtp.text,
-              agama.text,
-              pendidikan.text,
-              alamat.text,
-              email.text,
-              created_at,
-              DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()),
-              confirmPass.text,
-              _image)
-          .then((dynamic value) => _offLoading());
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => LoginPasien()));
+      if (_image == null) {
+        print(DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()));
+        controllerPasien
+            .registerPasienController_nonGambar(
+                //registrasiPasienServices.connectToAPI(
+                namaLengkap.text,
+                noHp.text,
+                jenisKelamin.text,
+                tanggalLahir.text,
+                noKtp.text,
+                agama.text,
+                pendidikan.text,
+                alamat.text,
+                email.text,
+                created_at,
+                DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()),
+                confirmPass.text)
+            .then((dynamic value) => _offLoading());
+      } else {
+        print(DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()));
+        controllerPasien
+            .registerPasienController(
+                //registrasiPasienServices.connectToAPI(
+                namaLengkap.text,
+                noHp.text,
+                jenisKelamin.text,
+                tanggalLahir.text,
+                noKtp.text,
+                agama.text,
+                pendidikan.text,
+                alamat.text,
+                email.text,
+                created_at,
+                DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now()),
+                confirmPass.text,
+                _image)
+            .then((dynamic value) => _offLoading());
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => LoginPasien()));
+      }
     } else {
       _offLoading();
     }
