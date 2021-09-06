@@ -1,5 +1,6 @@
 import 'package:aplikasi_rs/config/theme.dart';
 import 'package:aplikasi_rs/controllers/controllers.dart';
+import 'package:aplikasi_rs/models/model_pasien.dart';
 import 'package:aplikasi_rs/services/pasien_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -27,8 +30,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final picker = ImagePicker();
   File _image;
   _onLoading() => setState(() => isLoading = true);
-
   _offLoading() => setState(() => isLoading = false);
+
   @override
   void initState() {
     // String tgl = DateFormat("dd-MM-yyyy")
@@ -52,38 +55,92 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
   }
 
+  Future<dynamic> getGambar(String id) async {
+    String usernameAuth = "admin";
+    String passwordAuth = "1234";
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+
+    final response = await http.get(
+        Uri.parse(
+            "https://api.rsbmgeriatri.com/api/Pasien?bhayangkara-key=bhayangkara123&id=" +
+                id),
+        headers: <String, String>{'authorization': basicAuth});
+
+    print("hasil auth : " + response.body.toString());
+    Map<String, dynamic> bodyJson = jsonDecode(response.body);
+    return controllerPasien.pasien.value =
+        modelPasienFromJson(jsonEncode(bodyJson));
+  }
+
   _simpanProfile() async {
     _onLoading();
     String updateAt = DateFormat("yyyy-MM-dd H:m:s").format(DateTime.now());
 
     print("update : " + updateAt);
-    await PasienServices()
-        .editProfile(
-            idPasien: controllerPasien.pasien.value.idPasien,
-            namaLengkap: namaController.text,
-            tanggalLahir: tglLahirController.text,
-            noKtp: noKtpController.text,
-            jenisKelamin: jenisKelaminController.text,
-            agama: agamaController.text,
-            pendidikan: pendidikanController.text,
-            alamat: alamatController.text,
-            email: emailController.text,
-            createdAt: controllerPasien.pasien.value.createdAt,
-            updateAt: updateAt)
-        .then((value) {
-      _offLoading();
-      print("cetak value ui " + value.toString());
-      controllerPasien.pasien.value.namaLengkap = namaController.text;
-      controllerPasien.pasien.value.jenisKelamin = jenisKelaminController.text;
-      controllerPasien.pasien.value.alamat = alamatController.text;
-      controllerPasien.pasien.value.agama = agamaController.text;
-      controllerPasien.pasien.value.pendidikan = pendidikanController.text;
 
-      Get.back();
-    }).catchError((e) {
-      _offLoading();
-      print("error value ui " + e.toString());
-    });
+    if (_image == null) {
+      await PasienServices()
+          .editProfile_nonGambar(
+              idPasien: controllerPasien.pasien.value.idPasien,
+              namaLengkap: namaController.text,
+              tanggalLahir: tglLahirController.text,
+              noKtp: noKtpController.text,
+              jenisKelamin: jenisKelaminController.text,
+              agama: agamaController.text,
+              pendidikan: pendidikanController.text,
+              alamat: alamatController.text,
+              email: emailController.text,
+              createdAt: controllerPasien.pasien.value.createdAt,
+              updateAt: updateAt)
+          .then((value) {
+        print("cetak value ui " + value.toString());
+
+        getGambar(controllerPasien.pasien.value.idPasien);
+        _offLoading();
+        Get.back();
+      }).catchError((e) {
+        _offLoading();
+        print("error value ui " + e.toString());
+      });
+    } else {
+      await PasienServices()
+          .editProfile(
+              idPasien: controllerPasien.pasien.value.idPasien,
+              namaLengkap: namaController.text,
+              gambar: _image,
+              tanggalLahir: tglLahirController.text,
+              noKtp: noKtpController.text,
+              jenisKelamin: jenisKelaminController.text,
+              agama: agamaController.text,
+              pendidikan: pendidikanController.text,
+              alamat: alamatController.text,
+              email: emailController.text,
+              createdAt: controllerPasien.pasien.value.createdAt,
+              updateAt: updateAt)
+          .then((value) {
+        print("cetak value ui " + value.toString());
+
+        getGambar(controllerPasien.pasien.value.idPasien);
+        _offLoading();
+        // controllerPasien.pasien.value.namaLengkap = namaController.text;
+        // controllerPasien.pasien.value.gambar =
+        //     controllerPasien.pasien.value.gambar;
+        // controllerPasien.pasien.value.jenisKelamin = jenisKelaminController.text;
+        // controllerPasien.pasien.value.alamat = alamatController.text;
+        // controllerPasien.pasien.value.agama = agamaController.text;
+        // controllerPasien.pasien.value.pendidikan = pendidikanController.text;
+        Get.back();
+
+        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //   return ProfileScreen();
+        // }));
+      }).catchError((e) {
+        _offLoading();
+        print("error value ui " + e.toString());
+      });
+    }
   }
 
   Future _getImagegallery() async {
