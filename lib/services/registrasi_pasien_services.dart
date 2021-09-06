@@ -79,8 +79,6 @@ class registrasiPasienServices {
       print(imageProfile.path);
       print('Status code: ${response.statusCode}');
       print('Body: ${response.body}');
-      statusCode = response.statusCode.toString();
-      body = response.body;
       bool flagRegis = false;
 
       // if (response.statusCode == 200) {
