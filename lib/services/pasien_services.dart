@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:aplikasi_rs/models/model_pasien.dart';
 import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 
 class PasienServices {
-  Future<dynamic> editProfile({
+  Future<dynamic> editProfile_nonGambar({
     @required String idPasien,
     @required String namaLengkap,
     @required String tanggalLahir,
@@ -23,27 +25,113 @@ class PasienServices {
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
 
-    Map<String, dynamic> data = {
-      "id": idPasien,
-      "nama_lengkap": namaLengkap,
-      "tanggal_lahir": tanggalLahir,
-      "no_ktp": noKtp,
-      "jenis_kelamin": jenisKelamin,
-      "agama": agama,
-      "pendidikan": pendidikan,
-      "alamat": alamat,
-      "email": email,
-      "created_at": createdAt,
-      "updated_at": updateAt,
-    };
+    // Map<String, dynamic> data = {
+    //   "id": idPasien,
+    //   "nama_lengkap": namaLengkap,
+    //   "image_profile": gambar,
+    //   "tanggal_lahir": tanggalLahir,
+    //   "no_ktp": noKtp,
+    //   "jenis_kelamin": jenisKelamin,
+    //   "agama": agama,
+    //   "pendidikan": pendidikan,
+    //   "alamat": alamat,
+    //   "email": email,
+    //   "created_at": createdAt,
+    //   "updated_at": updateAt,
+    // };
 
-    print("cetak data : " + data.toString());
+    // print("cetak data : " + data.toString());
     try {
-      final response = await http.put(
-          Uri.parse(
-              "https://api.rsbmgeriatri.com/api/Pasien?bhayangkara-key=bhayangkara123"),
-          headers: <String, String>{'authorization': basicAuth},
-          body: data);
+      final request = http.MultipartRequest(
+          'POST', Uri.parse("https://api.rsbmgeriatri.com/api/Pasien/edit"));
+      request.headers["authorization"] = basicAuth;
+      request.fields['id'] = idPasien;
+      request.fields['nama_lengkap'] = namaLengkap;
+      request.fields['jenis_kelamin'] = jenisKelamin;
+      request.fields['no_ktp'] = noKtp;
+      request.fields['agama'] = agama;
+      request.fields['pendidikan'] = pendidikan;
+      request.fields['alamat'] = alamat;
+      request.fields['email'] = email;
+      request.fields['created_at'] = createdAt;
+      request.fields['updated_at'] = updateAt;
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //   final response = await http.put(
+      //       Uri.parse(
+      //           "https://api.rsbmgeriatri.com/api/Pasien?bhayangkara-key=bhayangkara123"),
+      //       headers: <String, String>{'authorization': basicAuth},
+      //       body: data);
+
+      print("hasil auth : " + response.body.toString());
+      return jsonDecode(response.body);
+    } catch (e) {
+      print("error editProfile Services" + e.toString());
+    }
+  }
+
+  Future<dynamic> editProfile({
+    @required String idPasien,
+    @required String namaLengkap,
+    @required File gambar,
+    @required String tanggalLahir,
+    @required String noKtp,
+    @required String jenisKelamin,
+    @required String agama,
+    @required String pendidikan,
+    @required String alamat,
+    @required String email,
+    @required String createdAt,
+    @required String updateAt,
+  }) async {
+    String usernameAuth = "admin";
+    String passwordAuth = "1234";
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+
+    // Map<String, dynamic> data = {
+    //   "id": idPasien,
+    //   "nama_lengkap": namaLengkap,
+    //   "image_profile": gambar,
+    //   "tanggal_lahir": tanggalLahir,
+    //   "no_ktp": noKtp,
+    //   "jenis_kelamin": jenisKelamin,
+    //   "agama": agama,
+    //   "pendidikan": pendidikan,
+    //   "alamat": alamat,
+    //   "email": email,
+    //   "created_at": createdAt,
+    //   "updated_at": updateAt,
+    // };
+
+    // print("cetak data : " + data.toString());
+    try {
+      final request = http.MultipartRequest(
+          'POST', Uri.parse("https://api.rsbmgeriatri.com/api/Pasien/edit"));
+      request.headers["authorization"] = basicAuth;
+      request.fields['id'] = idPasien;
+      request.fields['nama_lengkap'] = namaLengkap;
+      request.files.add(await http.MultipartFile.fromPath('file', gambar.path));
+      request.fields['jenis_kelamin'] = jenisKelamin;
+      request.fields['no_ktp'] = noKtp;
+      request.fields['agama'] = agama;
+      request.fields['pendidikan'] = pendidikan;
+      request.fields['alamat'] = alamat;
+      request.fields['email'] = email;
+      request.fields['created_at'] = createdAt;
+      request.fields['updated_at'] = updateAt;
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //   final response = await http.put(
+      //       Uri.parse(
+      //           "https://api.rsbmgeriatri.com/api/Pasien?bhayangkara-key=bhayangkara123"),
+      //       headers: <String, String>{'authorization': basicAuth},
+      //       body: data);
 
       print("hasil auth : " + response.body.toString());
       return jsonDecode(response.body);
