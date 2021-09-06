@@ -37,7 +37,7 @@ class _DashboardPasien extends State<DashboardPasien>
   }
 
   void setStatus(String status) async {
-    print("setStatus no ktp dokter : " + controllerPasien.pasien.value.noKtp);
+    print("setStatus no ktp pasien : " + controllerPasien.pasien.value.noKtp);
     var data = await _firestore
         .collection("users")
         .doc(controllerPasien.pasien.value.noKtp)

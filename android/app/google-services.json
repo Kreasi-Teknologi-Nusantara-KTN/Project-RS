@@ -1,39 +1,89 @@
 {
-  "project_info": {
-    "project_number": "117152979768",
-    "project_id": "bhayangkara-chat",
-    "storage_bucket": "bhayangkara-chat.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:117152979768:android:4d30cc8839a2582bc93fcd",
-        "android_client_info": {
-          "package_name": "com.example.aplikasi_rs"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "117152979768-mmuvcsqtr4fpvptpkmmjvblsc04sb2mm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDM0rpulQcKiOqdNSW-_fkRl2JTHCzWRTI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "117152979768-mmuvcsqtr4fpvptpkmmjvblsc04sb2mm.apps.googleusercontent.com",
-              "client_type": 3
+    "project_info": {
+        "project_number": "117152979768",
+        "project_id": "bhayangkara-chat",
+        "storage_bucket": "bhayangkara-chat.appspot.com"
+    },
+    "client": [{
+            "client_info": {
+                "mobilesdk_app_id": "1:117152979768:android:4d30cc8839a2582bc93fcd",
+                "android_client_info": {
+                    "package_name": "com.example.aplikasi_rs"
+                }
+            },
+            "oauth_client": [{
+                    "client_id": "117152979768-vlb96baqb9gvtub0qd6cnn42bd9mrem0.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "com.example.aplikasi_rs",
+                        "certificate_hash": "b76c6ae0b40bb5120f20d01ba1d43f3bb80f3fcd"
+                    }
+                },
+                {
+                    "client_id": "117152979768-mmuvcsqtr4fpvptpkmmjvblsc04sb2mm.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [{
+                "current_key": "AIzaSyDM0rpulQcKiOqdNSW-_fkRl2JTHCzWRTI"
+            }],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [{
+                            "client_id": "117152979768-mmuvcsqtr4fpvptpkmmjvblsc04sb2mm.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "117152979768-cvulajv4qbagh04pasglq81rftrblbbk.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "com.example.aplikasiRs"
+                            }
+                        }
+                    ]
+                }
             }
-          ]
+        },
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:117152979768:android:1bb3e63917ae57f9c93fcd",
+                "android_client_info": {
+                    "package_name": "com.rsbm.aplikasi_rs"
+                }
+            },
+            "oauth_client": [{
+                    "client_id": "117152979768-pvfg5fmckaknoolueatu98vb0soicflt.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "com.rsbm.aplikasi_rs",
+                        "certificate_hash": "85554741475f68b75fa5b055d5d2403ef6f4fd12"
+                    }
+                },
+                {
+                    "client_id": "117152979768-mmuvcsqtr4fpvptpkmmjvblsc04sb2mm.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [{
+                "current_key": "AIzaSyDM0rpulQcKiOqdNSW-_fkRl2JTHCzWRTI"
+            }],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [{
+                            "client_id": "117152979768-mmuvcsqtr4fpvptpkmmjvblsc04sb2mm.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "117152979768-cvulajv4qbagh04pasglq81rftrblbbk.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "com.example.aplikasiRs"
+                            }
+                        }
+                    ]
+                }
+            }
         }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    ],
+    "configuration_version": "1"
 }
