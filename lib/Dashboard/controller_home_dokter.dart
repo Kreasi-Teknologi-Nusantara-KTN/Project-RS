@@ -18,7 +18,8 @@ class ControllerHomeDoctor extends GetxController {
     return firestore.collection('users').doc(nik).snapshots();
   }
 
- Future <void> goToChatRoom(String chatId, String nik, String friendNik) async {
+  Future<void> goToChatRoom(String chatId, String nik, String friendNik,
+      String friendName, String friendPhoto) async {
     CollectionReference chats = firestore.collection('chats');
     CollectionReference users = firestore.collection('users');
 
@@ -45,7 +46,9 @@ class ControllerHomeDoctor extends GetxController {
 
     Get.to(() => KonsultasiChat(), arguments: {
       "chat_id": "$chatId",
-      "friendNik": friendNik
+      "friendNik": friendNik,
+      "friendPhoto": friendPhoto,
+      "friendName": friendName
     });
   }
 }

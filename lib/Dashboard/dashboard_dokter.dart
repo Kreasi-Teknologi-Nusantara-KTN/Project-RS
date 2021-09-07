@@ -1,4 +1,5 @@
 import 'package:aplikasi_rs/Dashboard/controller_home_dokter.dart';
+import 'package:aplikasi_rs/config/theme.dart';
 import 'package:aplikasi_rs/controllers/controller_chat.dart';
 import 'package:aplikasi_rs/controllers/controller_dokter.dart';
 import 'package:aplikasi_rs/helpers/shared_preferences.dart';
@@ -106,6 +107,41 @@ class _DashboardDokterState extends State<DashboardDokter>
                                         fontSize: 18,
                                       ),
                                     ))),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 18),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 50,
+                                      backgroundColor: AppColor.primaryColor,
+                                      backgroundImage: AssetImage(
+                                          "assets/images/ProfileDefault.jpg"),
+                                      foregroundImage: NetworkImage(
+                                        'https://rsbmgeriatri.com/bhayangkara_geriatri/asset/profiles/' +
+                                            controllerDokter
+                                                .dokter.value.imageProfile,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    SizedBox(
+                                      width: Get.width / 2,
+                                      child: Text(
+                                          controllerDokter
+                                              .dokter.value.namaDokter,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600)),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                             Positioned(
                                 child: GestureDetector(
                               onTap: () {
@@ -248,11 +284,18 @@ class _DashboardDokterState extends State<DashboardDokter>
                                             _onLoading();
                                             await controllerHomeDoctor
                                                 .goToChatRoom(
-                                                  "${listDocsChats[index].id}",
-                                                  controllerChat.user.value.nik,
-                                                  listDocsChats[index]
-                                                      ["connection"],
-                                                )
+                                                    "${listDocsChats[index].id}",
+                                                    controllerChat
+                                                        .user.value.nik,
+                                                    listDocsChats[index]
+                                                        ["connection"],
+                                                    data["name"],
+                                                    data['image_profile'] !=
+                                                            null
+                                                        ? ('https://api.rsbmgeriatri.com/assets/profile/' +
+                                                            data[
+                                                                'image_profile'])
+                                                        : "a")
                                                 .then((value) => _offLoading())
                                                 .catchError((e) {
                                               _offLoading();
@@ -264,7 +307,19 @@ class _DashboardDokterState extends State<DashboardDokter>
                                           },
                                           leading: CircleAvatar(
                                             radius: 30,
-                                            backgroundColor: Colors.black26,
+                                            backgroundColor:
+                                                AppColor.primaryColor,
+                                            backgroundImage: AssetImage(
+                                                "assets/images/ProfileDefault.jpg"),
+                                            foregroundImage: data[
+                                                        'image_profile'] !=
+                                                    null
+                                                ? NetworkImage(
+                                                    'https://api.rsbmgeriatri.com/assets/profile/' +
+                                                        data['image_profile'],
+                                                  )
+                                                : AssetImage(
+                                                    "assets/images/ProfileDefault.jpg"),
                                           ),
                                           title: Text(
                                             "${data["name"]}",

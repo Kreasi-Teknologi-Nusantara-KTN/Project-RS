@@ -89,6 +89,7 @@ class _LoginPasienState extends State<LoginPasien> {
             val.name = controllerPasien.pasien.value.namaLengkap;
             val.nik = controllerPasien.pasien.value.noKtp;
             val.creationTime = controllerPasien.pasien.value.createdAt;
+            val.imageProfile = controllerPasien.pasien.value.gambar;
           });
           controllerChat.user.refresh();
           print("nama_lengkap" + controllerPasien.pasien.value.namaLengkap);
@@ -102,17 +103,20 @@ class _LoginPasienState extends State<LoginPasien> {
             await users.doc(controllerChat.user.value.nik).set({
               "uid": controllerChat.user.value.uid,
               "name": controllerChat.user.value.name,
+              "image_profile": controllerChat.user.value.imageProfile,
               "nik": controllerChat.user.value.nik,
               "creationTime": controllerChat.user.value.creationTime,
               "status": "Offline"
             });
           }
+          await users.doc(controllerChat.user.value.nik).update(
+              {"image_profile": controllerChat.user.value.imageProfile});
           SharedPreferencesHelper.addStringToSF('noKtp', noKtp.text);
           SharedPreferencesHelper.addStringToSF('pass', pass.text);
           SharedPreferencesHelper.addStringToSF('role', 'pasien');
           offLoading();
 
-          Get.to(() => DashboardPasien());
+          Get.offAll(() => DashboardPasien());
         } else {
           offLoading();
 

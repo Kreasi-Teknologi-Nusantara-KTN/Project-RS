@@ -6,7 +6,12 @@ import 'package:get/get.dart';
 class ControllerChat extends GetxController {
   var user = ModelUsers().obs;
   var chatId;
-  Future<void> addNewConnection(String currentNik, String friendNik) async {
+  Future<void> addNewConnection(
+    String currentNik,
+    String friendNik, {
+    String imageProfile,
+    String friendName,
+  }) async {
     bool flagNewCoonnection = false;
     String date = DateTime.now().toIso8601String();
 
@@ -23,14 +28,18 @@ class ControllerChat extends GetxController {
     if (docChats.docs.length != 0) {
       //USER SUDAH PERNAH CHAT DENGAN SIAPAPUN
       print("USER SUDAH PERNAH CHAT DENGAN SIAPAPUN");
-      final checkConnection = await users.doc(currentNik).collection("chats").where("connection", isEqualTo: friendNik).get();
+      final checkConnection = await users
+          .doc(currentNik)
+          .collection("chats")
+          .where("connection", isEqualTo: friendNik)
+          .get();
 
-      if(checkConnection.docs.length != 0){
+      if (checkConnection.docs.length != 0) {
         print("USER SUDAH PERNAH CHAT DENGAN $friendNik");
         //SUDAH PERNAH BUAT KONEKSI DENGAN => friendNik
         flagNewCoonnection = false;
         chatId = checkConnection.docs[0].id;
-      }else{
+      } else {
         print("USER BELUM PERNAH CHAT DENGAN $friendNik");
         //BELUM PERNAH BUAT KONEKSI DENGAN => friendNik
         flagNewCoonnection = true;
@@ -77,12 +86,13 @@ class ControllerChat extends GetxController {
         });
 
         final listChats = await users.doc(currentNik).collection("chats").get();
-        print("PANJANG LIST CHAT YANG ADA : " +listChats.docs.length.toString());
+        print(
+            "PANJANG LIST CHAT YANG ADA : " + listChats.docs.length.toString());
         var data = List.of(listChats.docs);
 
-        if(data.length != 0){
+        if (data.length != 0) {
           List<ChatUsers> dataListChats = [];
-          print("PANJANG LIST CHAT YANG ADA : " +data.length.toString());
+          print("PANJANG LIST CHAT YANG ADA : " + data.length.toString());
           data.forEach((element) {
             var dataDocChat = element.data();
             var dataDocChatId = element.id;
@@ -96,7 +106,7 @@ class ControllerChat extends GetxController {
           user.update((val) {
             val.chats = dataListChats;
           });
-        }else{
+        } else {
           user.update((val) {
             val.chats = [];
           });
@@ -141,14 +151,14 @@ class ControllerChat extends GetxController {
         await chats.doc(newChatDoc.id).collection("chat");
 
         await users.doc(currentNik).collection("chats").doc(newChatDoc.id).set({
-          "connection":friendNik,
+          "connection": friendNik,
           "lastTime": date,
           "total_unread": 0,
         });
 
         final listChats = await users.doc(currentNik).collection("chats").get();
 
-        if(listChats.docs.length != 0){
+        if (listChats.docs.length != 0) {
           List<ChatUsers> dataListChats = [];
           var data = List.of(listChats.docs);
           data.forEach((element) {
@@ -164,7 +174,7 @@ class ControllerChat extends GetxController {
           user.update((val) {
             val.chats = dataListChats;
           });
-        }else{
+        } else {
           user.update((val) {
             val.chats = [];
           });
@@ -209,8 +219,10 @@ class ControllerChat extends GetxController {
         .update({"total_unread": 0});
 
     Get.to(() => KonsultasiChat(), arguments: {
-      "chat_id" : "$chatId",
-      "friendNik" : friendNik
+      "chat_id": "$chatId",
+      "friendNik": friendNik,
+      "friendPhoto": imageProfile,
+      "friendName": friendName,
     });
   }
 }

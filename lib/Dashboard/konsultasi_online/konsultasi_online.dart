@@ -60,19 +60,29 @@ class _KonsultasiOnlineState extends State<KonsultasiOnline> {
   _onLoading() => setState(() => loading = true);
   _offLoading() => setState(() => loading = false);
 
-  makeNewChat(int index)async{
+  makeNewChat(int index) async {
     _onLoading();
-   return controllerChat.addNewConnection(
-        controllerChat.user.value.nik,
-        (_filterDokter.length > 0)
-            ? _filterDokter[index].namaDokter
-            : controllerDokter
-            .dokterList[index].noKtp).then((value) {
-              _offLoading();
-   }).catchError((e){
-     _offLoading();
-     Get.snackbar("error", "gagal", backgroundColor: Colors.red);
-   });
+    return controllerChat
+        .addNewConnection(
+      controllerChat.user.value.nik,
+      (_filterDokter.length > 0)
+          ? _filterDokter[index].noKtp
+          : controllerDokter.dokterList[index].noKtp,
+      imageProfile:
+          'https://rsbmgeriatri.com/bhayangkara_geriatri/asset/profiles/' +
+              ((_filterDokter.length > 0)
+                  ? _filterDokter[index].imageProfile
+                  : controllerDokter.dokterList[index].imageProfile),
+      friendName: (_filterDokter.length > 0)
+          ? _filterDokter[index].namaDokter
+          : controllerDokter.dokterList[index].namaDokter,
+    )
+        .then((value) {
+      _offLoading();
+    }).catchError((e) {
+      _offLoading();
+      Get.snackbar("error", "gagal", backgroundColor: Colors.red);
+    });
   }
 
   getDataDokter() async {
@@ -183,12 +193,14 @@ class _KonsultasiOnlineState extends State<KonsultasiOnline> {
                         : SliverList(
                             delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {
-                                  print("Nik : " +controllerDokter.dokterList[index].noKtp.toString());
+                            print("Nik : " +
+                                controllerDokter.dokterList[index].noKtp
+                                    .toString());
                             return Container(
                               color: Colors.white,
                               child: InkWell(
                                 onTap: () {
-                                 makeNewChat(index);
+                                  makeNewChat(index);
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.only(left: 15),
@@ -209,13 +221,19 @@ class _KonsultasiOnlineState extends State<KonsultasiOnline> {
                                   ),
                                   child: Row(
                                     children: <Widget>[
-                                      Container(
-                                        height: 60,
-                                        width: 60,
-                                        decoration: BoxDecoration(
-                                            color: AppColor.primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
+                                      CircleAvatar(
+                                        radius: 30,
+                                        backgroundImage: AssetImage(
+                                            "assets/images/ProfileDefault.jpg"),
+                                        foregroundImage: NetworkImage(
+                                          'https://rsbmgeriatri.com/bhayangkara_geriatri/asset/profiles/' +
+                                              ((_filterDokter.length > 0)
+                                                  ? _filterDokter[index]
+                                                      .imageProfile
+                                                  : controllerDokter
+                                                      .dokterList[index]
+                                                      .imageProfile),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 14,

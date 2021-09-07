@@ -19,6 +19,10 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
   ControllerChatRoom controllerChatRoom = Get.find<ControllerChatRoom>();
   final String chatId = (Get.arguments as Map<String, dynamic>)["chat_id"];
   final String friednNik = (Get.arguments as Map<String, dynamic>)["friendNik"];
+  final String friendPhoto =
+      (Get.arguments as Map<String, dynamic>)["friendPhoto"];
+  final String friedName =
+      (Get.arguments as Map<String, dynamic>)["friendName"];
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -43,9 +47,13 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
               CircleAvatar(
                 radius: 25,
                 backgroundColor: Colors.grey,
+                backgroundImage: AssetImage("assets/images/ProfileDefault.jpg"),
+                foregroundImage: NetworkImage(
+                  friendPhoto,
+                ),
                 // child: StreamBuilder<DocumentSnapshot>(
                 //   stream: controllerChatRoom.streamFriendData(
-                //       (Get.arguments as Map<String, dynamic>)["friendEmail"]),
+                //       (Get.arguments as Map<String, dynamic>)["friendNik"]),
                 //   builder: (context, snapFriendUser) {
                 //     if (snapFriendUser.connectionState ==
                 //         ConnectionState.active) {
@@ -89,13 +97,15 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
           builder: (context, snapFriendUser) {
             if (snapFriendUser.connectionState == ConnectionState.active) {
               var dataFriend =
-              snapFriendUser.data.data() as Map<String, dynamic>;
+                  snapFriendUser.data.data() as Map<String, dynamic>;
               print("data friend : " + dataFriend.toString());
+              print("nik friend : " + friednNik.toString());
+              print("photo friend : " + friendPhoto.toString());
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    dataFriend["name"],
+                    dataFriend != null ? dataFriend["name"] : friedName,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -103,7 +113,7 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
                     ),
                   ),
                   Text(
-                    dataFriend["status"],
+                    dataFriend != null ? dataFriend["status"] : "Offline",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
@@ -155,8 +165,9 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
                       var alldata = snapshot.data.docs;
                       Timer(
                         Duration.zero,
-                            () => controllerChatRoom.scrollController.jumpTo(
-                            controllerChatRoom.scrollController.position.maxScrollExtent),
+                        () => controllerChatRoom.scrollController.jumpTo(
+                            controllerChatRoom
+                                .scrollController.position.maxScrollExtent),
                       );
                       return ListView.builder(
                         controller: controllerChatRoom.scrollController,
@@ -175,7 +186,7 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
                                 ItemChat(
                                   msg: "${alldata[index]["msg"]}",
                                   isSender: alldata[index]["pengirim"] ==
-                                      controllerChat.user.value.nik
+                                          controllerChat.user.value.nik
                                       ? true
                                       : false,
                                   time: "${alldata[index]["time"]}",
@@ -188,7 +199,7 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
                               return ItemChat(
                                 msg: "${alldata[index]["msg"]}",
                                 isSender: alldata[index]["pengirim"] ==
-                                    controllerChat.user.value.nik
+                                        controllerChat.user.value.nik
                                     ? true
                                     : false,
                                 time: "${alldata[index]["time"]}",
@@ -205,7 +216,7 @@ class _KonsultasiChatState extends State<KonsultasiChat> {
                                   ItemChat(
                                     msg: "${alldata[index]["msg"]}",
                                     isSender: alldata[index]["pengirim"] ==
-                                        controllerChat.user.value.nik
+                                            controllerChat.user.value.nik
                                         ? true
                                         : false,
                                     time: "${alldata[index]["time"]}",
@@ -310,28 +321,28 @@ class ItemChat extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment:
-        isSender ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+            isSender ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: [
           Container(
             decoration: BoxDecoration(
-              color: isSender? AppColor.primaryColor : Colors.white,
+              color: isSender ? AppColor.primaryColor : Colors.white,
               borderRadius: !isSender
                   ? BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              )
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    )
                   : BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-              ),
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
             ),
             padding: EdgeInsets.all(15),
             child: Text(
               "$msg",
               style: TextStyle(
-                color: isSender?Colors.white : Colors.black,
+                color: isSender ? Colors.white : Colors.black,
               ),
             ),
           ),

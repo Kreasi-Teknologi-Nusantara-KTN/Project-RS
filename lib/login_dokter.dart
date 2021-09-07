@@ -50,6 +50,7 @@ class _LoginDokterState extends State<LoginDokter> {
           val.uid = controllerDokter.dokter.value.idDokter;
           val.name = controllerDokter.dokter.value.namaDokter;
           val.nik = controllerDokter.dokter.value.noKtp;
+          val.imageProfile = controllerDokter.dokter.value.imageProfile;
           val.creationTime = "0000-00-00 00:00:00";
         });
         controllerChat.user.refresh();
@@ -63,16 +64,20 @@ class _LoginDokterState extends State<LoginDokter> {
           await users.doc(controllerChat.user.value.nik).set({
             "uid": controllerChat.user.value.uid,
             "name": controllerChat.user.value.name,
+            "image_profile": controllerChat.user.value.imageProfile,
             "nik": controllerChat.user.value.nik,
             "creationTime": "0000-00-00 00:00:00",
             "status": "Offline"
           });
         }
+        await users
+            .doc(controllerChat.user.value.nik)
+            .update({"image_profile": controllerChat.user.value.imageProfile});
         SharedPreferencesHelper.addStringToSF('noKtp', ktp.text);
         SharedPreferencesHelper.addStringToSF('pass', pass.text);
         SharedPreferencesHelper.addStringToSF('role', 'dokter');
         offLoading();
-        Get.to(() => DashboardDokter());
+        Get.offAll(() => DashboardDokter());
       } else {
         offLoading();
 
