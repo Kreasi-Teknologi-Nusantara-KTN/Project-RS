@@ -4,6 +4,7 @@ import 'package:aplikasi_rs/models/model_pasien.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class PasienServices {
   Future<dynamic> editProfile_nonGambar({
@@ -137,6 +138,7 @@ class PasienServices {
       return jsonDecode(response.body);
     } catch (e) {
       print("error editProfile Services" + e.toString());
+      throw (e.toString());
     }
   }
 
@@ -168,6 +170,7 @@ class PasienServices {
       return jsonDecode(response.body);
     } catch (e) {
       print("error ubahPassword Services" + e.toString());
+      throw (e.toString());
     }
   }
 
@@ -223,13 +226,17 @@ class PasienServices {
             "pasien_id": idPasien,
             "longitude": longitude,
             "latitude": latitude,
+            "tanggal_masuk_emergency":
+                DateFormat('yyyy-MM-dd').format(DateTime.now())
           });
 
       if (response.statusCode == 201) {
+        print("request : " + DateFormat('yyyy-MM-dd').format(DateTime.now()));
         return jsonDecode(response.body);
       }
     } catch (e) {
       print("error editProfile Services" + e.toString());
+      throw (e.toString());
     }
   }
 
